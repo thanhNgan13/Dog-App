@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_dogs_list">
 
     <fragment
-        android:id="@+id/listDogsFragment"
-        android:name="com.ptn.dop_app.ui.home.ListDogsFragment"
-        android:label="@string/menu_home"
+        android:id="@+id/nav_dogs_list"
+        android:name="com.ptn.dop_app.ui.listDogs.ListDogsFragment"
+        android:label="List Dogs"
         tools:layout="@layout/fragment_list_dogs" >
         <action
-            android:id="@+id/action_nav_home_to_detailDogsFragment"
+            android:id="@+id/action_nav_dogs_list_to_detailDogsFragment"
             app:destination="@id/detailDogsFragment" />
     </fragment>
 
@@ -33,6 +33,6 @@
         tools:layout="@layout/fragment_detail_dogs" >
         <action
             android:id="@+id/action_detailDogsFragment_to_nav_home"
-            app:destination="@id/nav_home" />
+            app:destination="@id/nav_dogs_list" />
     </fragment>
 </navigation>
