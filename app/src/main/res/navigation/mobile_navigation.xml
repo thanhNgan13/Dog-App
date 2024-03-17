@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/detailDogsFragment"
         android:name="com.ptn.dop_app.ui.detailDog.DetailDogsFragment"
-        android:label="fragment_detail_dogs"
+        android:label="Detail"
         tools:layout="@layout/fragment_detail_dogs" >
         <action
             android:id="@+id/action_detailDogsFragment_to_nav_home"

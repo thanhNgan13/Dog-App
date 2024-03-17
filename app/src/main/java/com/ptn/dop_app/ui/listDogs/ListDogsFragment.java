@@ -1,20 +1,22 @@
 package com.ptn.dop_app.ui.listDogs;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.ptn.dop_app.R;
 import com.ptn.dop_app.databinding.FragmentListDogsBinding;
 import com.ptn.dop_app.model.DogBreed;
 import com.ptn.dop_app.viewmodel.DogsAPIService;
@@ -39,7 +41,9 @@ public class ListDogsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         binding = FragmentListDogsBinding.inflate(inflater, container, false);
+
         return binding.getRoot();
     }
 
@@ -51,7 +55,7 @@ public class ListDogsFragment extends Fragment {
         dogBreeds = new ArrayList<>();
         dogsAdapter = new DogsAdapter(dogBreeds);
         rvDogs.setAdapter(dogsAdapter);
-        rvDogs.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvDogs.setLayoutManager(new GridLayoutManager(getContext(), 2));
         // Hiển thị spinner
         binding.progressBar.setVisibility(View.VISIBLE);
 
@@ -84,9 +88,31 @@ public class ListDogsFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_search_dog, menu);
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Search dog breeds...");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                dogsAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         compositeDisposable.clear(); // Hủy các subscriptions khi View bị hủy
         binding = null;
     }
+
+
 }

@@ -1,8 +1,13 @@
 package com.ptn.dop_app.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
-public class DogBreed {
+public class DogBreed  implements Parcelable {
     public DogBreed(int id, String name, String lifeSpan, String origin, String url) {
         this.id = id;
         this.name = name;
@@ -61,5 +66,19 @@ public class DogBreed {
     private String origin;
     @SerializedName("url")
     private String url;
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeString(lifeSpan);
+        parcel.writeString(origin);
+        parcel.writeString(url);
+    }
 }
 
